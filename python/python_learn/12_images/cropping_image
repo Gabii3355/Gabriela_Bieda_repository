@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+from PIL import Image
+pencils = Image.open('pencils.jpg')
+#top pencils
+x=0
+y=0
+w=1950/3
+h=1300/10
+cropped=pencils.crop((x,y,w,h))
+cropped.show()
+#bottom pencils
+x=0
+y=1100
+w=1950/3
+h=1300
+cropped2=pencils.crop((x,y,w,h))
+cropped2.show()
+
+

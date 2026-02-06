@@ -1,0 +1,17 @@
+#!/usr/bin/python3
+import random
+def estimate_pi(num_points):
+    inside_circle=0 #liczy punkty znajdujace sie w kole
+    for _ in range(num_points):
+        x=random.random() #losuje dla x od 0 do 1 liczbe
+        y=random.random() #losuje dla y od 0 do 1 liczbe
+        distance=x**2+y**2
+
+        if distance <= 1: #jesli punkt lezy w kole, zliczamy punkty w kole
+            inside_circle +=1
+
+    pi_estimate = 4* (inside_circle/num_points) #pi=4*(punkty w kole/ wszystkie punkty)
+    return pi_estimate
+points=1000000
+pi = estimate_pi(points)
+print(f'For {points} we have pi equal to {pi}')

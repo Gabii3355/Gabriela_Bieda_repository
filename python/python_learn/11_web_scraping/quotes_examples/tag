@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+
+import requests
+import bs4
+
+res= requests.get('http://quotes.toscrape.com/')
+soup=bs4.BeautifulSoup(res.text,'lxml')
+tags_raw=soup.select('.tag-item')
+for item in tags_raw:
+    print(item.text)
+

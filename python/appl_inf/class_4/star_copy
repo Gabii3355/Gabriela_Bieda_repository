@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+import turtle
+t=turtle.Turtle()
+def koch(side,n):
+#    for n in range(4):      
+    if n==0:
+        t.forward(side)
+        return
+    koch(side/3, n-1)
+    t.left(60) 
+    koch(side/3, n-1) 
+    t.right(120)
+    koch(side/3, n-1) 
+    t.left(60)
+    koch(side/3, n-1)
+       
+koch(200,4)
+

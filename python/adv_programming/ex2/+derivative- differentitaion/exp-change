@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return np.exp(x)
+
+def df_exact(x):
+    return np.exp(x)
+
+def derivative_central(x, y):
+    dy_dx = np.empty_like(y, dtype=float)
+
+    # centralna w środku
+    dy_dx[1:-1] = (y[2:] - y[:-2]) / (x[2:] - x[:-2])
+
+    # jednostronne na brzegach
+    dy_dx[0] = (y[1] - y[0]) / (x[1] - x[0])
+    dy_dx[-1] = (y[-1] - y[-2]) / (x[-1] - x[-2])
+
+    return dy_dx
+
+def rmse(err):
+    return np.sqrt(np.mean(err**2))
+
+# zakres do testów dokładności
+a, b = 0.0, 5.0
+
+# 1) Wykres porównawczy dla jednego kroku h0
+h0 = 0.1
+x0 = np.arange(a, b + h0, h0)
+y0 = f(x0)
+
+df_num0 = derivative_central(x0, y0)
+df_ex0 = df_exact(x0)
+
+plt.figure(figsize=(9, 5))
+plt.plot(x0, y0, label="f(x)=exp(x)")
+plt.plot(x0, df_num0, linestyle="--", label="f'(x) numerical")
+plt.plot(x0, df_ex0, linestyle=":", label="f'(x) analytical")
+plt.title("exp(x) and its derivative on [0,5]")
+plt.xlabel("x")
+plt.ylabel("value")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# 2) Test dokładności dla wielu kroków h
+hs = np.array([0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005, 0.002, 0.001])
+
+max_abs_errors = []
+rmse_errors = []
+max_rel_errors = []
+
+for h in hs:
+    x = np.arange(a, b + h, h)
+    y = f(x)
+
+    df_num = derivative_central(x, y)
+    df_ex = df_exact(x)
+
+    # pomijamy brzegi, bo tam jest gorsza różnica jednostronna
+    err = df_num[1:-1] - df_ex[1:-1]
+
+    max_abs_errors.append(np.max(np.abs(err)))
+    rmse_errors.append(rmse(err))
+
+    rel = np.abs(err) / np.maximum(np.abs(df_ex[1:-1]), 1e-15)
+    max_rel_errors.append(np.max(rel))
+
+max_abs_errors = np.array(max_abs_errors)
+rmse_errors = np.array(rmse_errors)
+max_rel_errors = np.array(max_rel_errors)
+
+plt.figure(figsize=(9, 5))
+plt.loglog(hs, max_abs_errors, marker="o", label="max abs error")
+plt.loglog(hs, rmse_errors, marker="o", label="RMSE")
+plt.loglog(hs, max_rel_errors, marker="o", label="max relative error")
+plt.gca().invert_xaxis()  # mniejszy krok po prawej, łatwiej czytać
+plt.title("Derivative accuracy vs step size h (central differences)")
+plt.xlabel("h")
+plt.ylabel("error")
+plt.grid(True, which="both")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Krótki podgląd liczb w konsoli
+for h, ea, er, erl in zip(hs, max_abs_errors, rmse_errors, max_rel_errors):
+    print(f"h={h:>7}  max_abs={ea:.3e}  rmse={er:.3e}  max_rel={erl:.3e}")

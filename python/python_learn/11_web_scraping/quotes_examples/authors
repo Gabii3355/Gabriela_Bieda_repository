@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+
+import requests
+import bs4
+
+res= requests.get('http://quotes.toscrape.com/')
+soup=bs4.BeautifulSoup(res.text,'lxml')
+authors=soup.select('.author')
+authors_names=set()
+for name in authors:
+    authors_names.add(name.text)
+print(authors_names)
+

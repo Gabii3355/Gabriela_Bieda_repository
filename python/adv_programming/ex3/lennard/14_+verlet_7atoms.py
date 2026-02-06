@@ -1,0 +1,116 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+# --- number of particles ---
+N = 7
+
+# --- initial positions (example layout) ---
+x = np.array([1, 2, 3, 4, 5, 6, 7], dtype=float)
+y = np.array([1, 2, 3, 4, 5, 6, 7], dtype=float)
+z = np.array([1, 2, 3, 4, 5, 6, 7], dtype=float)
+
+# --- initial velocities ---
+vx = np.array([0.1, -0.1, 0.05, 0, 0.02, -0.03, 0.04])
+vy = np.array([0, 0.1, -0.05, 0.02, -0.02, 0.03, -0.01])
+vz = np.array([0, 0, 0.1, -0.1, 0.05, -0.05, 0.02])
+
+# --- masses ---
+m = np.ones(N)   # all masses = 4.0
+
+# --- timestep ---
+dt = 0.001
+
+# --- storage for plotting ---
+traj_x = [[] for _ in range(N)]
+traj_y = [[] for _ in range(N)]
+traj_z = [[] for _ in range(N)]
+
+# --- Lennard-Jones force magnitude ---
+def force_LJ(r):
+    return -(48*r**(-13) - 24*r**(-7))
+
+# --- compute force between two particles ---
+def compute_force(i, j):
+    rx = x[j] - x[i]
+    ry = y[j] - y[i]
+    rz = z[j] - z[i]
+    r = math.sqrt(rx*rx + ry*ry + rz*rz)
+    F = force_LJ(r)
+    Fx = F * rx / r
+    Fy = F * ry / r
+    Fz = F * rz / r
+    return Fx, Fy, Fz
+
+# --- compute total forces on all particles ---
+def compute_all_forces():
+    Fx = np.zeros(N)
+    Fy = np.zeros(N)
+    Fz = np.zeros(N)
+
+    for i in range(N):
+        for j in range(i+1, N):
+            fij = compute_force(i, j)
+            Fx[i] += fij[0]
+            Fy[i] += fij[1]
+            Fz[i] += fij[2]
+
+            Fx[j] -= fij[0]
+            Fy[j] -= fij[1]
+            Fz[j] -= fij[2]
+
+    return Fx, Fy, Fz
+
+# --- initial forces ---
+Fx, Fy, Fz = compute_all_forces()
+
+# --- open XYZ trajectory file ---
+traj = open("traj_7atoms.xyz", "w")
+
+# ============================
+#      VELOCITY VERLET LOOP
+# ============================
+
+for step in range(10000):
+
+    # --- update positions ---
+    x += vx*dt + 0.5*(Fx/m)*dt*dt
+    y += vy*dt + 0.5*(Fy/m)*dt*dt
+    z += vz*dt + 0.5*(Fz/m)*dt*dt
+
+    # --- compute new forces ---
+    Fx_new, Fy_new, Fz_new = compute_all_forces()
+
+    # --- update velocities ---
+    vx += 0.5 * (Fx + Fx_new) / m * dt
+    vy += 0.5 * (Fy + Fy_new) / m * dt
+    vz += 0.5 * (Fz + Fz_new) / m * dt
+
+    # --- replace old forces ---
+    Fx, Fy, Fz = Fx_new, Fy_new, Fz_new
+
+    # --- save trajectory frame (XYZ format) ---
+    traj.write(f"{N}\n")
+    traj.write(f"step={step}\n")
+    for i in range(N):
+        traj.write(f"Ar {x[i]} {y[i]} {z[i]}\n")
+
+    # --- store for plotting ---
+    for i in range(N):
+        traj_x[i].append(x[i])
+        traj_y[i].append(y[i])
+        traj_z[i].append(z[i])
+
+traj.close()
+
+# --- 3D plot ---
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+for i in range(N):
+    ax.plot(traj_x[i], traj_y[i], traj_z[i])
+
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("z")
+plt.show()

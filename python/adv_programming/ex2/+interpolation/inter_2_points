@@ -1,0 +1,34 @@
+import matplotlib.pyplot as plt
+
+# input points
+x0, y0 = 2, 4
+x1, y1 = 5, 10
+
+# interpolation P0,1(x)
+def P01(x):
+    return ((x - x0) * y1 - (x - x1) * y0) / (x1 - x0)
+
+# points between x0 i x1
+xs_interp = [x0 + i*(x1-x0)/5 for i in range(1,5)]
+ys_interp = [P01(x) for x in xs_interp]
+# al points
+print("Known points")
+print(f"x={x0}, y={y0}")
+print(f"x={x1}, y={y1}")
+
+print("\nInterpolation points: ")
+for xi, yi in zip(xs_interp, ys_interp):
+    print(f"x={xi:.2f}, y={yi:.2f}")
+
+# Diagram
+plt.plot([x0, x1], [y0, y1], 'ro', label='input points')   
+plt.plot(xs_interp, ys_interp, 'bo', label='interpolation points') 
+plt.plot([x0, x1], [y0, y1], 'k--', label='interpolation line')
+
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Interpolation between points: (2,4) and (5,10)")
+plt.legend()
+plt.grid(True)
+plt.show()
+

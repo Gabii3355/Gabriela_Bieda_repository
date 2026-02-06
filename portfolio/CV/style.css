@@ -1,0 +1,299 @@
+/* Basic reset */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0f1417;
+  background: #f2f5f6;
+  line-height: 1.45;
+}
+
+:root{
+  --teal: #0f5566;
+  --teal-2: #0a4250;
+  --paper: #ffffff;
+  --muted: #5c6b73;
+  --line: #d7dde1;
+  --shadow: 0 10px 30px rgba(0,0,0,.10);
+}
+
+/* Page wrapper */
+.site{
+  padding: 24px 14px 60px;
+  display: grid;
+  gap: 26px;
+  justify-items: center;
+}
+
+.page{
+  width: min(1040px, 100%);
+}
+
+.sheet{
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Page 1 layout (sidebar + content) */
+.sheet-grid{
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 760px;
+}
+
+.sidebar{
+  background: var(--teal);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-wrap{
+  position: relative;
+  background: var(--teal-2);
+}
+
+.photo{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.name-wrap{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 18px;
+  background: rgba(10, 66, 80, .75);
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.name{
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.side-block{
+  padding: 18px 18px 0;
+}
+
+.side-title{
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255,255,255,.20);
+  padding-bottom: 8px;
+}
+
+.contact{
+  margin: 0;
+}
+
+.contact-row{
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.contact dt{
+  opacity: .85;
+  font-weight: 600;
+}
+
+.contact dd{
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.sidebar a{
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.side-list{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.side-list li{
+  margin: 6px 0;
+}
+
+.side-link{
+  margin-top: auto;
+  padding: 20px 18px 22px;
+}
+
+.github{
+  font-weight: 700;
+}
+
+/* Main content */
+.content{
+  padding: 26px 28px 30px;
+}
+
+.section{
+  margin-bottom: 18px;
+}
+
+.h1{
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.muted{ color: var(--muted); }
+
+.list-diamond{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.list-diamond li{
+  margin: 7px 0;
+}
+
+.list-diamond li::marker{
+  content: "◆  ";
+  color: var(--teal-2);
+  font-size: 12px;
+}
+
+.list-checks{
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.list-checks li{ margin: 6px 0; }
+.list-checks li::marker{
+  content: "✓  ";
+  color: var(--teal-2);
+}
+
+.job{
+  padding-top: 6px;
+}
+
+.job + .job{
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 14px;
+}
+
+.job-head{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.job-org{
+  font-weight: 800;
+}
+
+.job-dates{
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.job-meta{
+  margin-top: 6px;
+}
+
+/* Page 2 full width */
+.sheet-full{
+  padding: 28px 28px 34px;
+}
+
+.edu{
+  display: grid;
+  gap: 12px;
+}
+
+.edu-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.edu-row:first-child{
+  border-top: 0;
+  padding-top: 0;
+}
+
+.edu-title{
+  font-weight: 800;
+}
+
+.edu-sub{
+  margin-top: 2px;
+}
+
+.edu-dates{
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.cols-2{
+  columns: 2;
+  column-gap: 22px;
+}
+
+.lang{
+  font-weight: 700;
+}
+
+.clause .small{
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .sheet-grid{
+    grid-template-columns: 1fr;
+  }
+  .content{
+    padding: 22px 18px 24px;
+  }
+  .side-link{
+    margin-top: 0;
+  }
+  .cols-2{
+    columns: 1;
+  }
+  .job-head{
+    grid-template-columns: 1fr;
+  }
+  .job-dates{
+    white-space: normal;
+  }
+  .edu-row{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print */
+@media print{
+  body{ background: #fff; }
+  .site{ padding: 0; gap: 0; }
+  .page{ width: auto; }
+  .sheet{ box-shadow: none; border-radius: 0; }
+  .page-2{ page-break-before: always; }
+  a{ text-decoration: none; }
+}

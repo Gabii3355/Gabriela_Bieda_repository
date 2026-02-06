@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+import random
+import math #importujemy zeby uzywac pi
+def find_radius():
+    while True: #nieskonczona petla, szukamy do skutku
+        r=random.uniform(0.5,2.0) #losujemy promien z przedzialu 0.5-2.0
+        pole = math.pi * r**2 #obliczamy pole kola dla wylosowanego promienia
+        if abs(pole - math.pi) < 0.00001:
+            return r #zwracamy promien ktory da nam pole = pi
+
+print("We find the radius", find_radius())

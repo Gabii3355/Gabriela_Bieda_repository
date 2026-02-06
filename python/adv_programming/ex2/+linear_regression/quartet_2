@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+import matplotlib.pyplot as plt
+
+x = [10,8,13,9,11,14,6,4,12,7,5]
+y = [9.14,8.14,8.74,8.77,9.26,8.10,6.13,3.10,9.13,7.26,4.74]
+
+x_mean = sum(x) / len(x)
+y_mean = sum(y) / len(y)
+
+numerator = 0
+for i in range(len(x)):
+    xi = x[i]
+    yi = y[i]
+    numerator += (xi - x_mean) * (yi - y_mean)
+
+denominator = 0
+for xi in x:
+    denominator += (xi - x_mean)**2
+
+a = numerator / denominator
+b = y_mean - a * x_mean
+
+print(f"a = {a:.2f}, b = {b:.2f}")
+
+x_mean = sum(x) / len(x)
+y_mean = sum(y) / len(y)
+
+x_line = [min(x), max(x)]
+y_line = [a * xi + b for xi in x_line]
+
+#coefficient
+SSres = 0
+for i in range(len(x)):
+    yi = y[i]
+    fi = a * x[i] + b   # wartość przewidywana
+    print(f"x={x[i]}, y={yi}, fi={fi:.2f}")  # <-- wypisywanie kolejnych fi
+    SSres += (yi - fi)**2
+
+SStot = 0
+for yi in y:
+    SStot += (yi - y_mean)**2
+
+R2 = 1 - (SSres / SStot)
+
+print(f"SSres = {SSres:.2f}")
+print(f"SStot = {SStot:.2f}")
+print(f"R^2 = {R2:.4f}")
+
+plt.scatter(x, y, color='blue', label='Values')
+plt.plot(x_line, y_line,color='red', label='Linear regression')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Linear regression: y = ax + b')
+plt.legend()
+plt.grid(True)
+plt.show()
+

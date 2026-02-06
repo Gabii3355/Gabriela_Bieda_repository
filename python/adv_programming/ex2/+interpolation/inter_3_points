@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Input data: three known points
+xs = [0,1,2]
+ys = [1,3,4]
+
+# Recursive interpolation function (Lagrange form)
+def p(i, j, x):
+    if i == j:
+        return ys[i] 
+    else:
+        # recursive formula for interpolation
+        return ((x - xs[i]) * p(i+1, j, x) - (x - xs[j]) * p(i, j-1, x)) / (xs[j] - xs[i])
+
+# Print known points
+print("Known points:")
+for xi, yi in zip(xs, ys):
+    print(f"x={xi}, y={yi}")
+
+# Print interpolation values at selected x
+print("\nInterpolation values:")
+for x in [2, 3, 4, 5, 6, 7]:
+    print(f"x={x}, P(x)={p(0, len(xs)-1, x):.2f}")
+
+# Curve in plot
+x_plot = np.linspace(min(xs), max(xs), 200)
+y_plot = [p(0, len(xs)-1, x) for x in x_plot]
+
+# Plot known points
+plt.plot(xs, ys, 'ro', label='known points')       
+
+# Plot interpolation curve
+plt.plot(x_plot, y_plot, 'b-', label='interpolation curve')  
+
+# Plot straight line segments between consecutive points
+plt.plot([xs[0], xs[1]], [ys[0], ys[1]], 'g--', label='segment x0-x1')
+plt.plot([xs[1], xs[2]], [ys[1], ys[2]], 'm--', label='segment x1-x2')
+
+# Diagram settings
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Interpolation with 3 points and connecting segments")
+plt.legend()
+plt.grid(True)
+plt.show()

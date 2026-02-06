@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+#z danej listy pokazuje tylko pojeyczne liczby, bez powtorzen 
+def unique_list(lst):
+    x=[]
+    for num in lst:
+        if num not in x:
+            x.append(num)
+    return x
+print(unique_list([1,1,1,2,2,2,3,3,3,3,4,4,5,5,5,]))

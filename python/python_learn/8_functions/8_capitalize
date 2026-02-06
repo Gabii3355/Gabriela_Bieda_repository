@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+#robi 1 i 4 litere wielka
+def four_capital(name):
+    if len(name) > 3:
+        return name [:3].capitalize() + name[3:].capitalize() 
+    else: 
+        print('Your word is too short')
+print(four_capital('macdonald'))

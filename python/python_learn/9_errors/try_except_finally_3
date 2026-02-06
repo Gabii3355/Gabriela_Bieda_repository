@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+def ask():
+    while True:
+        try:
+            square=int(input("Please give a number:"))
+            		
+        except:
+            print("This is not a number, try again")
+            continue
+        else:
+            break
+        
+    print("Square of your number is", square**2)
+ask()

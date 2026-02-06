@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+import requests
+import bs4
+
+## Use the requests library to grab the page
+# Note sometimes you need to run this twice if it fails the first time
+result = requests.get("https://en.wikipedia.org/wiki/Deep_Blue_(chess_computer)")
+#print(result.text)
+
+##Pokazanie backendu strony w ladnych liniach, ulozone
+soup = bs4.BeautifulSoup(result.text,"lxml")
+#print(soup)
+
+##Wyciagniecie 'image' z kodu strony
+play_chess_image=soup.select('.mw-file-element')[3]
+print(play_chess_image['src'])
+
+url="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Kasparov_Magath_1985_Hamburg-2.png/250px-Kasparov_Magath_1985_Hamburg-2.png"
+'''
+##wyswietlenie obrazka za pomoca matplotlib
+from PIL import Image
+from io import BytesIO
+import matplotlib.pyplot as plt
+url="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Kasparov_Magath_1985_Hamburg-2.png/250px-Kasparov_Magath_1985_Hamburg-2.png"
+response=requests.get(url)
+img=Image.open(BytesIO(response.content))
+plt.imshow(img)
+plt.axis('off')
+plt.show()
+'''
+##Zapisanie obrazka w kompie
+response=requests.get(url)
+f=open('/home/gabi/python/11_web_scraping/image_chess.png','wb')
+f.write(response.content)
+f.close
+

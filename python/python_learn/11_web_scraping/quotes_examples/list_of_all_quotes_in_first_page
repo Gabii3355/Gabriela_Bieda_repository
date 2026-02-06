@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+
+import requests
+import bs4
+
+res= requests.get('http://quotes.toscrape.com/')
+soup=bs4.BeautifulSoup(res.text,'lxml')
+quotes_raw=soup.select('.text')
+quotes=[]
+for quote in quotes_raw:
+    quotes.append(quote.text)
+print(quotes)
+

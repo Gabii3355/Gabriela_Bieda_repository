@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+from PIL import Image
+
+red=Image.open('red_color.jpg')
+blue=Image.open('blue_color.png')
+blue.putalpha(200)
+red.show()
+blue.show()

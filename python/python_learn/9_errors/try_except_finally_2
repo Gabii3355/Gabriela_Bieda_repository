@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+x=5
+y=0
+try:
+    z=x/y
+    
+except:
+	print("Can't divide by 0")
+finally:
+    print("All done")

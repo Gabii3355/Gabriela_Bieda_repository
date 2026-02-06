@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+#mnozy kazda litere razy 3
+def times_free(text):
+    result=''
+    for char in text:
+        result += char*3
+    return result
+print(times_free('Hello world'))

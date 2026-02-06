@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+# mowi czy oba slowa zaczynaja sie na ta sama litere
+
+def animal_cracker(text):
+    two_words = text.split()
+    if two_words [0] [0] == two_words[1] [0]:
+        return True
+    else:
+        print(f'The first letters of there words {two_words} don not match')
+print(animal_cracker('Levelheaded Lama'))
+print(animal_cracker('Crazy Kangaro'))

@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+
+import turtle
+t=turtle.Turtle()
+'''
+def koch0 (side):
+    t.forward(side)
+#koch0(200)
+
+def koch1 (side):
+    koch0 (side/3) ;t.left(60)
+    koch0 (side/3) ;t.right(120)
+    koch0 (side/3) ;t.left(60)
+    koch0 (side/3)
+##koch1(200)
+
+def koch2 (side):
+    koch1 (side/3) ;t.left(60)
+    koch1 (side/3) ;t.right(120)
+    koch1 (side/3) ;t.left(60)
+    koch1 (side/3)
+##koch2(200)
+def koch3 (side):
+    koch2 (side/3) ;t.left(60)
+    koch2 (side/3) ;t.right(120)
+    koch2 (side/3) ;t.left(60)
+    koch2 (side/3) ;
+##koch3(200)
+'''
+          
+def koch(side,n):
+    for n in range(4):      
+        if n==0:
+            t.forward(side)
+        return
+    koch(side/3, n-1) ;t.left(60) 
+    koch(side/3, n-1) ;t.right(120)
+    koch(side/3, n-1) ;t.left(60)
+    koch(side/3, n-1)
+       
+koch(200)

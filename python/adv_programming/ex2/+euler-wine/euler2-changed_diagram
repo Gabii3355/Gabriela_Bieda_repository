@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+import matplotlib.pyplot as plt
+
+##initial values
+N0=0.150 #concentration of Nitrogen
+Xv0=0.1 #biomass,yeast
+S0=240.0 #sugar
+E0=0.0 #concentration of ethanol
+
+##parameters from table
+mu_max=0.16
+K_N=0.010
+Y_XN=31.0
+beta_max=0.3
+K_S=10.0
+Y_ES=0.47
+k_d_prime=0.0001
+
+##time frames
+t_start=0
+t_end=300
+dt=0.1
+n_steps=int((t_end-t_start)/dt)
+
+##initial list 
+t_list=[]
+N_list=[]
+Xv_list=[]
+S_list=[]
+E_list=[]
+
+#initial values 
+N=N0
+Xv=Xv0
+S=S0
+E=E0
+
+##euler loop:
+for i in range(n_steps+1):
+	t=i*dt
+	t_list.append(t)
+	N_list.append(N)
+	Xv_list.append(Xv)
+	S_list.append(S)
+	E_list.append(E)
+
+	#kinetic equations
+	mu = mu_max * N / (K_N + N) if (K_N + N) > 0 else 0
+	kd = k_d_prime * E
+	beta = beta_max * S / (K_S + S) if (K_S + S) > 0 else 0
+
+	#equations for N,E,S
+	dXv = (mu - kd) * Xv
+	dN = -(mu * Xv) / Y_XN
+	dE = beta * Xv
+	dS = -(beta * Xv) / Y_ES
+
+	#aktualizacja zmiennych
+	Xv += dt * dXv
+	N = max(0, N + dt * dN)
+	E = max(0, E + dt * dE)
+	S = max(0, S + dt * dS)
+
+fig, ax1 = plt.subplots(figsize=(10, 7))
+
+# Convert nitrogen from g/L to mg/L
+N_mg_list = [n * 1000 for n in N_list]
+
+# Left Y-axis: nitrogen (mg/L), sugar, ethanol
+ax1.plot(t_list, N_mg_list, label='Nitrogen (N) [mg/L]', color='red', linestyle='--')
+ax1.plot(t_list, S_list, label='Sugar (S) [g/L]', color='orange')
+ax1.plot(t_list, E_list, label='Ethanol (E) [g/L]', color='blue')
+ax1.set_xlabel('Time [hours]')
+ax1.set_ylabel('Concentration: nitrogen [mg/L], sugar, ethanol [g/L]')
+ax1.grid(True)
+
+# Right Y-axis: biomass
+ax2 = ax1.twinx()
+ax2.plot(t_list, Xv_list, label='Biomass (Xv) [g/L]', color='green')
+ax2.set_ylabel('Biomass concentration [g/L]', color='green')
+ax2.tick_params(axis='y', labelcolor='green')
+ax2.set_ylim(0, 10)   # <-- fixed range for biomass
+
+# Combined legend
+lines1, labels1 = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
+
+plt.title('Fermentation simulation: nitrogen in mg/L, biomass on separate axis')
+plt.tight_layout()
+plt.show()
+

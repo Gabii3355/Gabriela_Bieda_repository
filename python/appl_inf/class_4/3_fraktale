@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+import math #zaimportowane do operacji matematycznych
+import turtle #do rysowania
+import sys
+t=turtle.Turtle() #tworzy obiekt turtle jako zmienna t
+for i in range(4):
+	t.forward(100) #do przodu o 100 jednostek
+	t.left(90) #o 90 stopni skreca w lewo
+        # -> daje to kwadrat
+a=100
+for j in range(15):
+	a=a-10 #zmniejszenie wartosci boku kwadratu o 10 za kazdym razem w petli
+	t.forward(10)
+	b=((a)**2+10**2)**(1/2) #przekatna malego trojkata prostokatnego o dlugosci a i 10
+	t.left(math.degrees(math.atan(10/a))) #kat obrotu - z funkcji arcus tangens
+        # -> funkcja ta obliczy kat nachylenia przekatnej = zakrecenie spiralnego efektu
+	for i in range(4):
+		t.forward(b)
+		t.left(90)
+                #-> rysuje kwadrat o boku b, ktory jest obrocony o kat obliczony wczesniej
+	a=b
+turtle.done()
+

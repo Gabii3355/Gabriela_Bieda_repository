@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+
+
+n = 100
+
+x = np.linspace(0, np.pi, n)
+
+
+
+sinx = np.sin(x)
+
+cos_from_sinx = np.gradient(sinx, x)
+
+cos_numpy = np.cos(x)
+
+
+
+# sin(x) - linia ciągła
+
+plt.plot(x, sinx, linestyle="-", label=" f(x)=sin(x)")
+
+
+
+# cos(x) z pochodnej i cos(x) z numpy - linie przerywane
+
+plt.plot(x, cos_from_sinx, linestyle="--", label="f'(x) numerical")
+
+plt.plot(x, cos_numpy, linestyle=':', label="f'(x) analytical")
+
+
+
+plt.xlabel("x")
+plt.title("sin(x) derivative")
+plt.ylabel("value")
+
+plt.grid(True)
+
+plt.legend()
+plt.savefig('sinx-ok.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+#!/usr/bin/env python3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# siatka x na [0, 5]
+n = 100
+x = np.linspace(0, 5, n)
+
+# funkcja f(x)=exp(x)
+fx = np.exp(x)
+
+# pochodna numeryczna f'(x) ~ d/dx exp(x)
+fprime_num = np.gradient(fx, x)
+
+# pochodna analityczna f'(x)=exp(x)
+fprime_anal = np.exp(x)
+
+plt.figure(figsize=(8, 6))
+plt.plot(x, fx, label="f(x)=exp(x)")
+plt.plot(x, fprime_num, linestyle="--", label="f'(x) numerical")
+plt.plot(x, fprime_anal, linestyle=":", label="f'(x) analytical")
+
+plt.title("exp(x) derivative")
+plt.xlabel("x")
+plt.ylabel("value")
+plt.grid(True)
+plt.legend()
+plt.savefig('exp-ok.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+#!/usr/bin/env python3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# siatka x na [0, 2]
+n = 100
+x = np.linspace(0, 2, n)
+
+# f(x) = 11x^3 - 3x^2 - 7x + 13
+fx = 11*x**3 - 3*x**2 - 7*x + 13
+
+# pochodna numeryczna
+fprime_num = np.gradient(fx, x)
+
+# pochodna analityczna: f'(x) = 33x^2 - 6x - 7
+fprime_anal = 33*x**2 - 6*x - 7
+
+plt.figure(figsize=(8, 6))
+plt.plot(x, fx, label=r"$f(x)=11x^3-3x^2-7x+13$")
+plt.plot(x, fprime_num, linestyle="--", label="f'(x) numerical")
+plt.plot(x, fprime_anal, linestyle=":", label="f'(x) analytical")
+
+plt.title("polynomial derivative")
+plt.xlabel("x")
+plt.ylabel("value")
+plt.grid(True)
+plt.legend()
+plt.savefig('pol-ok.png', dpi=300, bbox_inches='tight')
+plt.show()
+

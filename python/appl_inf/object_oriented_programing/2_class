@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+import math
+#shows volume and surface of the cylinder
+class Cylinder():
+    def __init__(self,heigh=1,radius=1):
+        self.heigh= heigh
+        self.radius=radius
+    def volume(self):
+        return self.heigh*math.pi*(self.radius)**2 #3h*3.14*r^2
+    def surface_area(self):
+        top= math.pi *(self.radius)**2 #pir^2
+        return (2*top) + (2*math.pi*self.radius*self.heigh)
+cylinder = Cylinder(2,3)
+print(cylinder.volume())
+print(cylinder.surface_area())

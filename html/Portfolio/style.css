@@ -1,0 +1,16 @@
+body {
+    background-color: bisque;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+img {
+    width: 250px;
+    height: 250px;
+}
+.bordered {
+    border: violet;
+    background-color: violet;
+    padding: 20px;
+    margin-left: 500px;
+    margin-right: 500px;
+}

@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+from random import random
+list=[]
+for x in range(1,10):
+	list.append(random())
+print(list)
+mem=list[0]
+for y in list:
+	if y<mem:
+		print("y jest mniejsze od mem",y,mem)
+	mem=y
+print(mem)
+zam=1
+while zam>0:
+	for i in range(len(list)-1):
+		if list[i]>list[i+1]:
+			list[i],list[i+1] = list[i+1],list[i]
+			zam=1
+print(list)

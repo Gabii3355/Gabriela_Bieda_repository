@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+#jesli z trzech liczb miedzy 1-11 ich suma wynosi 21 to pokaze ich sume, jesli jest wieksza od 21 lub ta liczba to 11 to ma pomniejszyc sume o 10 
+def sum_less_than_21(a,b,c):
+    if sum((a,b,c)) <=21:
+        return sum((a,b,c))
+    elif sum((a,b,c)) > 21 and 11 in (a,b,c):
+        return sum((a,b,c))-10
+    else:
+        return 'BUST'
+    
+print(sum_less_than_21(5,6,7))
+print(sum_less_than_21(9,9,9))
+print(sum_less_than_21(9,9,11))

@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+#stawai slowa z tekstu w odwrotnej kolejnosci
+def reverse_sentense(text):
+    reverse_done=(text.split() [::-1])
+    return ' '.join(reverse_done)
+print(reverse_sentense('My name is Gabi'))

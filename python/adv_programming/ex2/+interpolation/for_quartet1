@@ -1,0 +1,42 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Input data: quartet points
+xs = [10,8,13,9,11,14,6,4,12,7,5]
+ys = [8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68]
+
+# Recursive interpolation function (Lagrange form)
+def p(i, j, x):
+    if i == j:
+        return ys[i]  # base case: return the y-value of the point
+    else:
+        # recursive formula for interpolation
+        return ((x - xs[i]) * p(i+1, j, x) - (x - xs[j]) * p(i, j-1, x)) / (xs[j] - xs[i])
+
+# Print known points
+print("Known points:")
+for xi, yi in zip(xs, ys):
+    print(f"x={xi}, y={yi}")
+
+# Print interpolation values at selected x
+print("\nInterpolation values:")
+for x in [2, 3, 4, 5, 6, 7]:
+    print(f"x={x}, P(x)={p(0, len(xs)-1, x):.2f}")
+
+# Curve in plot
+x_plot = np.linspace(min(xs), max(xs), 200)
+y_plot = [p(0, len(xs)-1, x) for x in x_plot]
+
+# Plot known points
+plt.plot(xs, ys, 'ro', label='known points')       
+
+# Plot interpolation curve
+plt.plot(x_plot, y_plot, 'b-', label='interpolation curve')  
+
+# Diagram settings
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Anscombe's Quartet I (with interpolation")
+plt.legend()
+plt.grid(True)
+plt.show()

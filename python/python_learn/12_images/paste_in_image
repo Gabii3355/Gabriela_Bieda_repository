@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+from PIL import Image
+
+mac=Image.open('example.jpg')
+print(mac.size)
+half=1993/2
+x=half-200
+w=half+200
+y=800
+h=1257
+computer=mac.crop((x,y,w,h))
+pasted=mac.paste(im=computer,box=(0,0))
+mac.show()

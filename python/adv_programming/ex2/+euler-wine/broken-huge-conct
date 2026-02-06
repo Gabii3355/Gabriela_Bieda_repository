@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+import matplotlib.pyplot as plt
+
+# OPCJA 2: E (ethanol) wychodzi ~2000 g/L
+
+## initial values (celowo "złe")
+N0 = 10.0     # dużo azotu
+Xv0 = 500.0   # ogromna biomasa
+S0 = 4300.0   # absurdalnie wysoki cukier
+E0 = 0.0
+
+## parameters from table
+mu_max = 0.16
+K_N = 0.010
+Y_XN = 31.0
+beta_max = 0.3
+K_S = 10.0
+Y_ES = 0.47
+k_d_prime = 0.0001
+
+## time frames 0-300 hours
+t_start = 0
+t_end = 300
+dt = 0.1
+n_steps = int((t_end - t_start) / dt)
+
+## initial list
+t_list = []
+N_list = []
+Xv_list = []
+S_list = []
+E_list = []
+
+# initial values
+N = N0
+Xv = Xv0
+S = S0
+E = E0
+
+## euler loop
+for i in range(n_steps + 1):
+    t = i * dt
+    t_list.append(t)
+    N_list.append(N)
+    Xv_list.append(Xv)
+    S_list.append(S)
+    E_list.append(E)
+
+    # kinetic equations
+    mu = mu_max * N / (K_N + N) if (K_N + N) > 0 else 0
+    kd = k_d_prime * E
+    beta = beta_max * S / (K_S + S) if (K_S + S) > 0 else 0
+
+    # equations for N,E,S
+    dXv = (mu - kd) * Xv
+    dN = -(mu * Xv) / Y_XN
+    dE = beta * Xv
+    dS = -(beta * Xv) / Y_ES
+
+    # aktualizacja zmiennych
+    Xv += dt * dXv
+    N = max(0, N + dt * dN)
+    E = max(0, E + dt * dE)
+    S = max(0, S + dt * dS)
+
+max_ethanol = max(E_list)
+print(f"Max ethanol concentration: {max_ethanol:.1f} [g/L]")
+
+plt.plot(t_list, Xv_list, label='Xv (biomass)')
+plt.plot(t_list, N_list, label='N (Nitrogen)')
+plt.plot(t_list, S_list, label='S (Sugar)')
+plt.plot(t_list, E_list, label='E (Ethanol)')
+plt.xlabel('Time [h]')
+plt.ylabel('Concentration [g/L]')
+plt.title('Simulation via euler method (very high concentrations)')
+plt.legend()
+plt.grid(True)
+plt.show()

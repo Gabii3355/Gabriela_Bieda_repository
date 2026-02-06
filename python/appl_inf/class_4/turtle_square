@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+import turtle 
+t=turtle.Turtle()
+
+##square
+def square (side):
+	for i in range(4):
+            t.forward(side)
+            t.left(90)
+square(200)
+
+##star
+def star (side):
+    t.forward(side/3); t.right(60)
+    t.forward(side/3); t.left(120)
+    t.forward(side/3); t.right(60)
+    t.forward(side/3)
+star(200)
+

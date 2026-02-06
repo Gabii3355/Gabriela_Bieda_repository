@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+
+import requests
+import bs4
+
+url='http://quotes.toscrape.com/page/'
+#print(soup)
+authors=set()
+page=1
+page_still_valid=True
+
+while page_still_valid:
+    page_url=url+str(page)
+    res = requests.get(page_url)
+    if "No quotes found!" in res.text:
+        break
+    soup=bs4.BeautifulSoup(res.text,'lxml')
+
+    for name in soup.select('.author'):
+        authors.add(name.text)
+    page+=1
+for author in sorted(authors):
+    print(author)
